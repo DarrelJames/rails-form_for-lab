@@ -1,7 +1,7 @@
 class StudentsController < ApplicationController
 
   def show
-    @student = Student.find_by_id(params[:id])
+    @student = find_student_by_id
   end
 
   def new
@@ -16,13 +16,19 @@ class StudentsController < ApplicationController
   end
 
   def edit
-    @student = Student.find_by_id(params[:id])
+    @student = find_student_by_id
   end
 
   def update
 
-    @student = Student.find_by_id(params[:id])
+    @student = find_student_by_id
     @student.update(params.require(:student).permit(:first_name, :last_name))
     redirect_to student_path(@student)
+  end
+
+  private
+
+  def find_student_by_id
+    Student.find_by_id(params[:id])
   end
 end
